@@ -3,10 +3,9 @@
 
 function isPalindrome(str) {
   // method 1: kind of cheaty since I just did the string reverse recursion problem
+
   //   function reverse(str) {
   //     if (str.length === 0) return "";
-  //     //   console.log(str.slice(-1));
-  //     //   console.log(str.slice(0, str.length - 1));
   //     return str.slice(-1) + reverse(str.slice(0, str.length - 1));
   //   }
   //   revStr = reverse(str);
@@ -15,6 +14,11 @@ function isPalindrome(str) {
   //   } else {
   //     return false;
   //   }
+
+  //   method 2
+  if (str.length === 0) return "";
+
+  return str.slice(-1) + reverse(str.slice(0, str.length - 1));
 }
 
 var testCases = {
