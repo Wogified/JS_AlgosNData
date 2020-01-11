@@ -94,9 +94,43 @@ class doublyLinkedList {
     return this;
   }
   //   find and return the node at the desired index
-  get() {}
+  get(index) {
+    // if there are no items in the list or
+    // the index is less than 0 or greater than the length-1, return undefined
+    if (!this.head || index < 0 || index >= this.length) return undefined;
+    // find the halfway point in the list
+    let half = Math.floor(this.length / 2);
+    let node = null;
+    // if the index is less than or equal to the half way point
+    // start the search from the beginning
+    if (index <= half) {
+      node = this.head;
+      while (index > 0) {
+        node = node.next;
+        index--;
+      }
+    }
+    // Otherwise, start the search from the end
+    else {
+      node = this.tail;
+      index = this.length - 1 - index;
+      while (index > 0) {
+        node = node.prev;
+        index--;
+      }
+    }
+    // return node at index
+    return node;
+  }
   //   change the node value at the desired index
-  set() {}
+  set(index, val) {
+    // if there are no items in the list or
+    // the index is less than 0 or greater than the length-1, return undefined
+    if (!this.head || index < 0 || index >= this.length) return false;
+    let node = this.get(index);
+    node.val = val;
+    return true;
+  }
   //   insert a node at a desired index
   insert() {}
   //   remove a node from a desired index
@@ -125,5 +159,7 @@ a.print();
 // console.log(a.pop());
 // console.log(a.shift());
 a.unshift(1000000);
+console.log(a.get(0));
+a.set(5, "bloop");
 
 console.log(a);
