@@ -7,7 +7,7 @@ class Node {
   }
 }
 
-class singlyLinkedList {
+export default class singlyLinkedList {
   constructor() {
     this.length = 0;
     this.head = null;
@@ -195,16 +195,16 @@ class singlyLinkedList {
   }
 }
 
-var test = new singlyLinkedList();
-test.push("hi");
-test.push("bye");
-test.push(123);
+// var test = new singlyLinkedList();
+// test.push("hi");
+// test.push("bye");
+// test.push(123);
 // test.pop();
 // test.shift();
-test.unshift("blerg");
-test.insert(0, "lard");
+// test.unshift("blerg");
+// test.insert(0, "lard");
 // console.log(test);
-test.insert(4, "loop");
+// test.insert(4, "loop");
 // console.log(test);
 // test.insert(3, 9999);
 // console.log(test);
@@ -212,22 +212,6 @@ test.insert(4, "loop");
 // console.log(test.remove(0));
 // console.log(test.remove(4));
 // console.log(test.remove(39));
-test.print();
-test.reverse();
-test.print();
-// for (let i = 0; i <= test.length; i++) {
-//   console.log(test.get(i));
-// }
-
-console.log("done");
-
-// var test2 = new singlyLinkedList();
-// test2.push("hi");
-
-// test2.pop();
-// console.log(test2);
-
-// var first = new Node("Hi");
-// first.next = new Node("there");
-// first.next.next = new Node("pear");
-// console.log(first);
+// test.print();
+// test.reverse();
+// test.print();

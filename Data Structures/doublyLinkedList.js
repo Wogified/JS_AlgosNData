@@ -97,7 +97,7 @@ class doublyLinkedList {
   get(index) {
     // if there are no items in the list or
     // the index is less than 0 or greater than the length-1, return undefined
-    if (!this.head || index < 0 || index >= this.length) return undefined;
+    if (!this.head || index < 0 || index >= this.length) return null;
     // find the halfway point in the list
     let half = Math.floor(this.length / 2);
     let node = null;
@@ -132,9 +132,62 @@ class doublyLinkedList {
     return true;
   }
   //   insert a node at a desired index
-  insert() {}
+  insert(index, val) {
+    // if the index is out of range of the list, return false
+    if (index < 0 || index > this.length) return false;
+    // if the node is at index of 0
+    if (index === 0) {
+      this.unshift(val);
+      return true;
+    }
+    // if the index is at the end of the list
+    if (index === this.length) {
+      this.push(val);
+      return true;
+    }
+    // find the current node at the index
+    let prevNode = this.get(index - 1);
+    let nextNode = prevNode.next;
+    // create a new node with supplied value
+    let newNode = new Node(val);
+    // set the new node's prev prop to be the prev node
+    newNode.prev = prevNode;
+    // set the new node's next prop to be the prev node's next node
+    newNode.next = prevNode.next;
+    // set the prev node's prev prop to be the new node
+    prevNode.next = newNode;
+    // set the next node's prev prop to be the new node
+    nextNode.prev = newNode;
+    // increment the length
+    this.length++;
+    return true;
+  }
   //   remove a node from a desired index
-  remove() {}
+  remove(index) {
+    // if the index is out of range of the list, return undefined
+    if (index < 0 || index >= this.length) return undefined;
+    // if the node is at index of 0
+    if (index === 0) return this.shift();
+    // if the index is at the end of the list
+    if (index === this.length - 1) return this.pop();
+    // get the node at the desired index
+    let node = this.get(index);
+    // temp variables to store the prev and next nodes
+    let prev = node.prev;
+    let next = node.next;
+    // connect the prev.next to the next node
+    // and the next.prev to the prev node
+    prev.next = next;
+    next.prev = prev;
+    // clear the connections of the removed node
+    node.prev = null;
+    node.next = null;
+    // decrement the length
+    this.length--;
+    // return the removed value
+    return node;
+  }
+
   //   prints all values in the list in array form
   print() {
     var arr = [];
@@ -145,21 +198,41 @@ class doublyLinkedList {
     }
     console.log(arr);
   }
+  reverse() {
+    let current = this.head;
+    this.head = this.tail;
+    this.tail = current;
+    let prev = null;
+    let next = null;
+
+    while (current !== null) {
+      prev = current.prev;
+      next = current.next;
+      current.next = prev;
+      current.prev = next;
+      current = next;
+    }
+    return this;
+  }
 }
 
-var a = new doublyLinkedList();
-a.unshift("booger");
-a.unshift("tree");
-
-a.push(1);
-a.push(2);
-a.push("poo");
-a.print();
-
+// var a = new doublyLinkedList();
+// a.unshift("booger");
+// a.unshift("tree");
+// a.push(1);
+// a.push(2);
+// a.push("poo");
 // console.log(a.pop());
 // console.log(a.shift());
-a.unshift(1000000);
-console.log(a.get(0));
-a.set(5, "bloop");
-
-console.log(a);
+// a.unshift(1000000);
+// console.log(a.get(0));
+// a.set(5, "bloop");
+// console.log(a.insert(a.length, "meep"));
+// console.log(a.insert(0, 89734));
+// console.log(a.insert(3, "blarg"));
+// a.remove(a.length - 1);
+// a.remove(0);
+// a.remove(2);
+// a.print();
+// a.reverse();
+// a.print();
