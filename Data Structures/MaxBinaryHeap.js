@@ -31,43 +31,50 @@ class MaxBinaryHeap {
   }
   extractMax() {
     //   get the length of the value array
-    let n = this.values.length;
+    const n = this.values.length;
     //   swap the max value with the last value (could be smallest, but not guaranteed)
     this.swap(0, n - 1);
     // remove the max value, which should be at the end now
     let output = this.values.pop();
     if (n > 2) {
       // declare variables for the parent and child nodes
-      let parentIdx = 0,
-        childIdx = 0,
-        chIdx1 = 0,
-        chIdx2 = 0,
-        child1 = 0,
-        child2 = 0;
-      let parent = this.values[parentIdx];
-      // stop the while loop when the child index is beyond the length of the heap
-      while (childIdx < n) {
-        // declare child indices
-        chIdx1 = 2 * parentIdx + 1;
-        chIdx2 = 2 * parentIdx + 2;
-        if (chIdx1 < n) child1 = this.values[chIdx1];
-        else child1 = null;
-        if (chIdx2 < n) child2 = this.values[chIdx2];
-        else child2 = null;
-
-        // compare the parent to each of its children to decide which path to go down
-        // otherwise break if the parent is still larger than both its children
-        if (child1 && parent < child1) childIdx = chIdx1;
-        else if (child2 && parent < child2) childIdx = chIdx2;
-        else break;
-        //   swap the values of the child and the parent
-        this.swap(childIdx, parentIdx);
-        // update the child and parent indexes
-        parentIdx = childIdx;
-      }
+      this.sinkDown();
     }
 
     return output;
+  }
+  sinkDown() {
+    const n = this.values.length;
+    let parentIdx = 0,
+      childIdx = 0,
+      chIdx1 = 0,
+      chIdx2 = 0,
+      child1 = 0,
+      child2 = 0;
+    let parent = this.values[parentIdx];
+    // stop the while loop when the child index is beyond the length of the heap
+    while (childIdx < n) {
+      // declare child indices
+      chIdx1 = 2 * parentIdx + 1;
+      chIdx2 = 2 * parentIdx + 2;
+      if (chIdx1 < n) child1 = this.values[chIdx1];
+      else child1 = null;
+      if (chIdx2 < n) child2 = this.values[chIdx2];
+      else child2 = null;
+
+      // compare the parent to each of its children to decide which path to go down
+      // otherwise break if the parent is still larger than both its children
+      if (child1 && child2 && parent < child1 && parent < child2) {
+        if (child1 < child2) childIdx = chIdx2;
+        else childIdx = chIdx1;
+      } else if (child1 && parent < child1) childIdx = chIdx1;
+      else if (child2 && parent < child2) childIdx = chIdx2;
+      else break;
+      //   swap the values of the child and the parent
+      this.swap(childIdx, parentIdx);
+      // update the child and parent indexes
+      parentIdx = childIdx;
+    }
   }
   swap(i, j) {
     let temp = this.values[i];
