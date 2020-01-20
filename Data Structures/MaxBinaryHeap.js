@@ -37,20 +37,24 @@ class MaxBinaryHeap {
     // remove the max value, which should be at the end now
     let output = this.values.pop();
     if (n > 2) {
+      // declare variables for the parent and child nodes
       let parentIdx = 0;
-      let childIdx1 = 2 * parentIdx + 1;
-      let childIdx2 = 2 * parentIdx + 2;
+      let childIdx = 0;
       let parent = this.values[parentIdx];
-      let child = this.values[childIdx];
-      while (childIdx1 < n && childIdx2 < n) {
+      // stop the while loop when the child index is beyond the length of the heap
+      while (childIdx < n) {
+        // declare child indices
+        let chIdx1 = 2 * parentIdx + 1;
+        let chIdx2 = 2 * parentIdx + 2;
+        // compare the parent to each of its children to decide which path to go down
+        // otherwise break if the parent is still larger than both its children
+        if (parent < this.values[chIdx1]) childIdx = chIdx1;
+        else if (parent < this.values[chIdx2]) childIdx = chIdx2;
+        else break;
         //   swap the values of the child and the parent
         this.swap(childIdx, parentIdx);
         // update the child and parent indexes
         parentIdx = childIdx;
-        childIdx = 2 * parentIdx + 1;
-        // update the values of the child and parent
-        parent = this.values[parentIdx];
-        child = this.values[childIdx];
       }
     }
 
@@ -76,5 +80,5 @@ a.insert(1000);
 console.log(a.values);
 a.extractMax();
 console.log(a.values);
-a.extractMax();
+console.log(a.extractMax());
 console.log(a.values);

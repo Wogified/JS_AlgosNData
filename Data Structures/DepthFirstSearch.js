@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // Depth first search Pre order: 
 
 function preOrderDFS(tree){
@@ -63,7 +62,6 @@ for(let i =0;i<BSTvals.length;i++){
 }
 
 console.log(preOrderDFS((a)));
-=======
 // implement Depth first searching preorder
 
 class Node {
@@ -170,4 +168,3 @@ var result = postOrder(a);
 console.log(result);
 var result = inOrder(a);
 console.log(result);
->>>>>>> 4cace08fc6ef523a59e8d22257eb11d90296752b
