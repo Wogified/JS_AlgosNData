@@ -1,0 +1,173 @@
+<<<<<<< HEAD
+// Depth first search Pre order: 
+
+function preOrderDFS(tree){
+    // variable to store values of nodes visited
+    let output = []
+    let current = tree.root
+
+    function traverse(node){
+        output.push(node.value)
+        if(node.left) traverse(node.left)
+        else return node
+        if(node.right) traverse(node.right)
+        else return node
+    }
+    traverse(current)
+    return output
+}
+
+class Node {
+    constructor(val) {
+      this.value = val;
+      this.left = null;
+      this.right = null;
+    }
+  }
+  
+  class BinarySearchTree {
+    constructor() {
+      this.root = null;
+    }
+    //   insert method
+    insert(val) {
+      let newNode = new Node(val);
+      if (this.root === null) {
+        this.root = newNode;
+      } else {
+        let next = this.root;
+        let current;
+        while (next !== null) {
+          current = next;
+          if (newNode.value === current.value) return undefined;
+          if (newNode.value > current.value) {
+            next = next.right;
+            if (!next) current.right = newNode;
+          } else {
+            next = next.left;
+            if (!next) current.left = newNode;
+          }
+        }
+      }
+      return this;
+    }
+
+  }
+  var a = new BinarySearchTree();
+  var BSTvals = [10,5,15,2,6,12,17]
+//          10
+//      5       15
+//    2   6   12   17
+for(let i =0;i<BSTvals.length;i++){
+    a.insert(BSTvals[i]);
+}
+
+console.log(preOrderDFS((a)));
+=======
+// implement Depth first searching preorder
+
+class Node {
+  constructor(val) {
+    this.value = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+class BinarySearchTree {
+  constructor() {
+    this.root = null;
+  }
+  //   insert method
+  insert(val) {
+    let newNode = new Node(val);
+    if (this.root === null) {
+      this.root = newNode;
+    } else {
+      let next = this.root;
+      let current;
+      while (next !== null) {
+        current = next;
+        if (newNode.value === current.value) return undefined;
+        if (newNode.value > current.value) {
+          next = next.right;
+          if (!next) current.right = newNode;
+        } else {
+          next = next.left;
+          if (!next) current.left = newNode;
+        }
+      }
+    }
+    return this;
+  }
+}
+
+function preOrder(tree) {
+  let output = [];
+  let current = tree.root;
+  function traverse(node) {
+    // push in the value of the current node
+    output.push(node.value);
+
+    // if the current node has left child, call traverse again
+    if (node.left) traverse(node.left);
+    else return node;
+    // if the current node has a right child, call traverse again
+    if (node.right) traverse(node.right);
+    else return node;
+  }
+  traverse(current);
+  return output;
+}
+
+function postOrder(tree) {
+  let output = [];
+  let current = tree.root;
+  function traverse(node) {
+    // if the current node has left child, call traverse again
+    if (node.left) traverse(node.left);
+    // if the current node has a right child, call traverse again
+    if (node.right) traverse(node.right);
+    // push in the value of the current node
+    output.push(node.value);
+  }
+  traverse(current);
+  return output;
+}
+
+function inOrder(tree) {
+  let output = [];
+  let current = tree.root;
+  function traverse(node) {
+    // if the current node has left child, call traverse again
+    if (node.left) traverse(node.left);
+    // push in the value of the current node
+    output.push(node.value);
+    // if the current node has a right child, call traverse again
+    if (node.right) traverse(node.right);
+  }
+  traverse(current);
+  return output;
+}
+
+var a = new BinarySearchTree();
+
+var BST_array = [10, 5, 2, 6, 15, 12, 17];
+for (let i = 0; i < BST_array.length; i++) {
+  a.insert(BST_array[i]);
+}
+
+//              10
+//          5       15
+//        2   6   12    17
+
+// Correct result
+// [10,5,2,6,15,12,17]
+
+var result = preOrder(a);
+console.log(result);
+var result = postOrder(a);
+console.log(result);
+var result = inOrder(a);
+console.log(result);
+>>>>>>> 4cace08fc6ef523a59e8d22257eb11d90296752b
