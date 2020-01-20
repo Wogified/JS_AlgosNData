@@ -29,6 +29,33 @@ class MaxBinaryHeap {
       }
     }
   }
+  extractMax() {
+    //   get the length of the value array
+    let n = this.values.length;
+    //   swap the max value with the last value (could be smallest, but not guaranteed)
+    this.swap(0, n - 1);
+    // remove the max value, which should be at the end now
+    let output = this.values.pop();
+    if (n > 2) {
+      let parentIdx = 0;
+      let childIdx1 = 2 * parentIdx + 1;
+      let childIdx2 = 2 * parentIdx + 2;
+      let parent = this.values[parentIdx];
+      let child = this.values[childIdx];
+      while (childIdx1 < n && childIdx2 < n) {
+        //   swap the values of the child and the parent
+        this.swap(childIdx, parentIdx);
+        // update the child and parent indexes
+        parentIdx = childIdx;
+        childIdx = 2 * parentIdx + 1;
+        // update the values of the child and parent
+        parent = this.values[parentIdx];
+        child = this.values[childIdx];
+      }
+    }
+
+    return output;
+  }
   swap(i, j) {
     let temp = this.values[i];
     this.values[i] = this.values[j];
@@ -46,4 +73,8 @@ a.insert(123);
 a.insert(77);
 a.insert(1000);
 
+console.log(a.values);
+a.extractMax();
+console.log(a.values);
+a.extractMax();
 console.log(a.values);
