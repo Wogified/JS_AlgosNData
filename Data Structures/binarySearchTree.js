@@ -47,7 +47,7 @@ class BinarySearchTree {
         // update the value of the current node
         current = next;
         // if current value is equal to new node, return undefined
-        if (value === current.value) return true;
+        if (value === current.value) return current;
         //   if the new node is greater than the current node, go right. otherwise go left
         if (value > current.value) next = next.right;
         else next = next.left;
@@ -65,10 +65,11 @@ a.insert(2);
 a.insert(11);
 a.insert(7);
 a.insert(16);
-console.log(a.find(2));
-console.log(a.find(3));
-console.log(a.find(10));
-console.log(a.find(6));
-console.log(a.find(13));
-console.log(a.find(30));
+// console.log(a.find(2));
+// console.log(a.find(3));
+// console.log(a.find(10));
+// console.log(a.find(6));
+// console.log(a.find(13));
+// console.log(a.find(30));
+
 console.log(a);
