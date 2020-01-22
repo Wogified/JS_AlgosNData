@@ -2,42 +2,39 @@
 
 class MaxBinaryHeap {
   constructor() {
+    // this.values = [1000, 50, 100, 30, 22, 70, 80, 11];
     this.values = [];
   }
   insert(val) {
     //   push in the new value
     this.values.push(val);
-    // check the length of the values array
-    let childIdx = this.values.length - 1;
-    // if the array length is greater than 1
-    if (childIdx > 0) {
-      // calculate the value of the parent index
-      let parentIdx = Math.floor((childIdx - 1) / 2);
+    this.bubbleUp();
+  }
+  bubbleUp() {
+    let currentIdx = this.values.length - 1;
+    const elem = this.values[currentIdx];
+    while (currentIdx > 0) {
+      let parentIdx = Math.floor((currentIdx - 1) / 2);
       let parent = this.values[parentIdx];
-      let child = this.values[childIdx];
-      // while the child node is still larger than the parent node
-      // bubble up the value
-      while (parent < child) {
-        //   swap the values of the child and the parent
-        this.swap(childIdx, parentIdx);
-        // update the child and parent indexes
-        childIdx = parentIdx;
-        parentIdx = Math.floor((childIdx - 1) / 2);
-        // update the values of the child and parent
-        parent = this.values[parentIdx];
-        child = this.values[childIdx];
-      }
+      console.log(parent);
+      if (elem <= parent) break;
+      this.values[parentIdx] = elem;
+      this.values[currentIdx] = parent;
+      currentIdx = parentIdx;
     }
   }
   extractMax() {
     //   get the length of the value array
     const n = this.values.length;
     //   swap the max value with the last value (could be smallest, but not guaranteed)
-    this.swap(0, n - 1);
-    // remove the max value, which should be at the end now
-    let output = this.values.pop();
-    if (n > 2) {
-      // declare variables for the parent and child nodes
+    const output = this.values[0];
+    // remove the value from the end of the heap and store it
+    const end = this.values.pop();
+
+    if (n > 0) {
+      // move the last value to the front
+      this.values[0] = end;
+      //   let the value sink down into the correct position
       this.sinkDown();
     }
 
@@ -49,8 +46,8 @@ class MaxBinaryHeap {
       childIdx = 0,
       chIdx1 = 0,
       chIdx2 = 0,
-      child1 = 0,
-      child2 = 0;
+      child1,
+      child2;
     let parent = this.values[parentIdx];
     // stop the while loop when the child index is beyond the length of the heap
     while (childIdx < n) {
@@ -84,17 +81,14 @@ class MaxBinaryHeap {
 }
 
 var a = new MaxBinaryHeap();
-a.insert(100);
-a.insert(10);
-a.insert(50);
-a.insert(35);
-a.insert(11);
-a.insert(123);
-a.insert(77);
-a.insert(1000);
+a.insert(41);
+a.insert(39);
+a.insert(33);
+a.insert(18);
+a.insert(27);
+a.insert(12);
+a.insert(55);
 
-console.log(a.values);
-a.extractMax();
 console.log(a.values);
 console.log(a.extractMax());
 console.log(a.values);
