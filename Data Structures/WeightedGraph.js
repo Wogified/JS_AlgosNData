@@ -1,4 +1,4 @@
-// implement a undirected graph
+// implement a weighted graph
 
 class Graph {
   constructor() {
@@ -19,11 +19,8 @@ class Graph {
     this.removeEdgeHelper(vertex2, vertex1);
   }
   removeEdgeHelper = (v1, v2) => {
-    console.log("hello");
-    console.log(v1, v2);
     //   get the length of the adjacency list
     let n = this.adjacencyList[v1].length;
-    console.log(n);
     // set default value of the found index
     let foundIdx = 0;
     // if the list has more than 1 value in it, then loop through to find a match
@@ -41,7 +38,6 @@ class Graph {
     this.adjacencyList[v1][foundIdx] = this.adjacencyList[v1][n - 1];
     this.adjacencyList[v1][n - 1] = temp;
     this.adjacencyList[v1].pop();
-    console.log(this.adjacencyList[v1]);
   };
   removeVertex(vertex) {
     let n = this.adjacencyList[vertex].length;
