@@ -96,25 +96,25 @@ class Graph {
           let nextVert = this.adjacencyList[current][i];
           let dist = this.adjacencyList[current][i].weight;
           let temp = current;
-          console.log(`Current: ${current}, Next: ${nextVert.node}`);
+          // console.log(`Current: ${current}, Next: ${nextVert.node}`);
           if (visited[nextVert] === undefined) {
             // loop while the previous vert is not null
             // this won't happen on the first verts from the start
             while (temp !== start) {
-              if (current === "D") {
-                console.log(previous);
-                // console.log(temp);
-                console.log(dist);
-              }
+              // if (current === "D") {
+              //   // console.log(previous);
+              //   // console.log(temp);
+              //   // console.log(dist);
+              // }
               for (let j = 0; j < this.adjacencyList[temp].length; j++) {
                 if (this.adjacencyList[temp][j].node === previous[temp]) {
-                  console.log(this.adjacencyList[temp][j].node, dist);
+                  // console.log(this.adjacencyList[temp][j].node, dist);
                   dist += this.adjacencyList[temp][j].weight;
                 }
               }
               temp = previous[temp];
             }
-            console.log(`Total Dist: ${dist}`);
+            // console.log(`Total Dist: ${dist}`);
             if (dist < distances[nextVert.node]) {
               distances[nextVert.node] = dist;
               previous[nextVert.node] = current;
@@ -122,6 +122,8 @@ class Graph {
             }
           }
         }
+        console.log(distances);
+        console.log(previous);
       }
       visited[current] = true;
     }
@@ -133,8 +135,6 @@ class Graph {
       temp = previous[temp];
     }
     console.log(result);
-    console.log(distances);
-    console.log(previous);
   }
 }
 
