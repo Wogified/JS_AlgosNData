@@ -1,17 +1,102 @@
 // implement dijstra's algorithm
-class PriorityQueue {
+class Node {
+  constructor(val, priority) {
+    this.value = val;
+    this.priority = priority;
+  }
+}
+
+class MinPriorityQueue {
   constructor() {
     this.values = [];
   }
-  enqueue(val, priority) {
-    this.values.push({ val, priority });
-    this.sort();
+  Enqueue(val, priority) {
+    // create a new node
+    let newNode = new Node(val, priority);
+    //   push in the new value
+    this.values.push(newNode);
+    this.bubbleUp();
   }
-  dequeue() {
-    return this.values.shift();
+  bubbleUp() {
+    let currentIdx = this.values.length - 1;
+    const elem = this.values[currentIdx];
+    while (currentIdx > 0) {
+      let parentIdx = Math.floor((currentIdx - 1) / 2);
+      let parent = this.values[parentIdx];
+      if (elem.priority >= parent.priority) break;
+      this.values[parentIdx] = elem;
+      this.values[currentIdx] = parent;
+      currentIdx = parentIdx;
+    }
   }
-  sort() {
-    this.values.sort((a, b) => a.priority - b.priority);
+  Dequeue() {
+    //   get the length of the value array
+    const n = this.values.length;
+    //   swap the max value with the last value (could be smallest, but not guaranteed)
+    const output = this.values[0];
+    // remove the value from the end of the heap and store it
+    const end = this.values.pop();
+
+    if (n > 0) {
+      // move the last value to the front
+      this.values[0] = end;
+      //   let the value sink down into the correct position
+      this.sinkDown();
+    }
+
+    return output;
+  }
+  sinkDown() {
+    const n = this.values.length;
+    let parentIdx = 0,
+      leftIdx = 0,
+      rightIdx = 0,
+      leftChild,
+      rightChild,
+      parent = this.values[parentIdx];
+    // stop the while loop when the child index is beyond the length of the heap
+    while (true) {
+      // swap variable to store potential swap index
+      let swap = null;
+      // declare child indices
+      leftIdx = 2 * parentIdx + 1;
+      rightIdx = 2 * parentIdx + 2;
+      //   if left child index is valid
+      if (leftIdx < n) {
+        //   define the left child value
+        leftChild = this.values[leftIdx];
+        // if the left child has lower priority than the parent
+        // then set the swap index to be the left child index
+        if (parent.priority > leftChild.priority) {
+          swap = leftIdx;
+        }
+      }
+      //   check if the right child index is valid
+      if (rightIdx < n) {
+        //   define the right child value
+        rightChild = this.values[rightIdx];
+        // if the swap index is still undefined and the right child has lower priority than the parent
+        // or
+        // if the swap index is already set to the left index and the right child has lower priority
+        // than the left child
+        // then
+        // set the swap index to the right child index
+        if (
+          (swap === null && parent.priority > rightChild.priority) ||
+          (swap !== null && rightChild.priority < leftChild.priority)
+        ) {
+          swap = rightIdx;
+        }
+      }
+      //   if the swap index is still null at this point, then no swaps will be made
+      if (swap === null) break;
+
+      //   swap the values of the child and the parent
+      this.values[parentIdx] = this.values[swap];
+      this.values[swap] = parent;
+      // update the child and parent indexes
+      parentIdx = swap;
+    }
   }
 }
 class Graph {
@@ -64,7 +149,7 @@ class Graph {
     // object to store current cumulative distances from the current vertex to the start vertex
     let distances = {};
     //  Priority queue for looking at the vertex with the shortest path
-    let pq = new PriorityQueue();
+    let pq = new MinPriorityQueue();
     // an object to store the prevous vertices visited in order to reach the current vertex
     let previous = {};
     // object to keep track of which vertices have been visited
@@ -77,7 +162,7 @@ class Graph {
       if (item === start) distances[item] = 0;
       else distances[item] = Infinity;
       // add all vertices into the priority queue
-      pq.enqueue(item, distances[item]);
+      pq.Enqueue(item, distances[item]);
       // set the previous object to be null
       previous[item] = null;
     }
@@ -85,37 +170,21 @@ class Graph {
     while (pq.values.length > 0) {
       // console.log(pq.values);
       // dequeue a value
-      smallest = pq.dequeue().val;
+      smallest = pq.Dequeue().value;
       // break out of the loop if the end vertex is reached
       if (smallest === end) break;
       // Loop over the adjacency list of the smallest vertex
       for (let i = 0; i < this.adjacencyList[smallest].length; i++) {
         // check if the smallest vertex has a previous vertex
         let nextVert = this.adjacencyList[smallest][i];
-        let dist = this.adjacencyList[smallest][i].weight;
-        let temp = smallest;
+        let dist = this.adjacencyList[smallest][i].weight + distances[smallest];
         // check if the vertex has not been visited before
         if (visited[nextVert] === undefined) {
-          // loop while the previous vert is not null
-          // this won't happen on the first verts from the start
-          while (temp !== start) {
-            // loop through the adjacency list using the previous object as a map
-            for (let j = 0; j < this.adjacencyList[temp].length; j++) {
-              // add up distances to previous vertices
-              if (this.adjacencyList[temp][j].node === previous[temp])
-                dist += this.adjacencyList[temp][j].weight;
-            }
-            // update the temp var to be the previous vertex
-            temp = previous[temp];
-          }
           // if the calculated distance is less than the stored distance value
-          // update the distance value
-          // update the previous vertex list
-          // enqueue the new distance and vertex
           if (dist < distances[nextVert.node]) {
             distances[nextVert.node] = dist;
             previous[nextVert.node] = smallest;
-            pq.enqueue(nextVert.node, distances[nextVert.node]);
+            pq.Enqueue(nextVert.node, distances[nextVert.node]);
           }
         }
       }
