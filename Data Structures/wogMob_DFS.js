@@ -42,13 +42,10 @@ function preOrderDFS(tree) {
     function traverse(node) {
         // push in the value of the current node
         output.push(node.value)
-
         // if the current node has left child, call traverse again
         if (node.left) traverse(node.left)
-        else return node
         // if the current node has a right child, call traverse again
         if (node.right) traverse(node.right)
-        else return node
     }
     traverse(current)
     return output
